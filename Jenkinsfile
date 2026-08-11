@@ -1,5 +1,10 @@
 node {
 
+    stage('Checkout') {
+        echo 'Checking out source code...'
+        checkout scm
+    }
+
     stage('Build') {
         echo 'Starting Build...'
         bat 'mvn clean package -DskipTests'
