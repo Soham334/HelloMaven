@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                echo 'Checking out source code...'
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Starting Maven Build...'
+                bat 'mvn clean package -DskipTests'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Starting Maven Tests...'
+                bat 'mvn test'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Starting Deployment...'
+                bat 'echo Deployment completed successfully'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'CI/CD Pipeline completed successfully!'
+        }
+
+        failure {
+            echo 'CI/CD Pipeline failed!'
+        }
+    }
+}
